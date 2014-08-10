@@ -1,0 +1,11 @@
+td.description {
+  width: 30em;
+}
+
+td.amount {
+  width: 10em;
+}
+
+td.category {
+  width: 20em;
+}

@@ -56,3 +56,17 @@ class Expense(models.Model):
             df = pd.read_csv('data.csv', parse_dates=['Date'], index_col='Date')
             cache.set('data_frame', df)
             return df
+
+    @classmethod
+    def monthly(self, year=datetime.now().year):
+        data = {}
+        start_date = datetime(year, 1, 1)
+        for expense in self.cached().filter(date__gte=start_date):
+            month = expense.date.strftime('%B %Y')
+            month = datetime(expense.date.year, expense.date.month, 1)
+            if not month in data:
+                data[month] = []
+            data[month].append(expense)
+        data = sorted(data.iteritems())
+        data.reverse()
+        return data

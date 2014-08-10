@@ -4,10 +4,10 @@ from expenses.models import Expense
 
 
 def index(request):
-    expenses = Expense.cached()
+    monthly = Expense.monthly()
 
     context = {
-        'expenses': expenses,
+        'monthly_expenses': monthly,
     }
     return render(
         request,
