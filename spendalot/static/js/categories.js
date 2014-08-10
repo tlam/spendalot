@@ -22,12 +22,13 @@ function drawCategory() {
     data.addColumn("number", category_name); 
        
     $.getJSON("/categories/" + category_slug + ".json", function(monthly_data) {
-        data.addRows(Object.size(monthly_data));
+        var amountData = monthly_data['Amount'];
+        data.addRows(Object.size(amountData));
 
         var j = 0;
-        $.each(monthly_data, function(month, dict) {
-            data.setValue(j, 0, month.toString());
-            data.setValue(j, 1, parseFloat(dict.sum));
+        $.each(amountData, function(month, sum) {
+            data.setValue(j, 0, month);
+            data.setValue(j, 1, parseFloat(sum));
             ++j;
         });
 
