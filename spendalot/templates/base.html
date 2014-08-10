@@ -1,0 +1,18 @@
+<html>
+  <head>
+    <title>Spend a lot</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/spendalot.css" type="text/css" />
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="{{ STATIC_URL }}js/spendalot.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <ul class="nav nav-pills">
+      <li {% if '/' == request.path %}class="active"{% endif %}><a href="{% url 'home' %}">Home</a></li>
+      <li {% if 'categories' in request.path %}class="active"{% endif %}><a href="{% url 'categories:index' %}">Categories</a></li>
+      <li {% if 'expenses' in request.path %}class="active"{% endif %}><a href="{% url 'expenses:index' %}">Expenses</a></li>
+      <li {% if 'statements' in request.path %}class="active"{% endif %}><a href="{% url 'statements:index' %}">Statements</a></li>
+    </ul>
+    {% block content %}{% endblock %}
+  </body>
+</html>

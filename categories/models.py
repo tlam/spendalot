@@ -1,0 +1,17 @@
+from datetime import datetime
+
+from django.db import models
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=200)
+    slug = models.CharField(max_length=50)
+    created_at = models.DateTimeField(auto_now_add=True, default=datetime.now())
+    updated_at = models.DateTimeField(auto_now=True, default=datetime.now())
+
+    class Meta:
+        ordering = ['name']
+        verbose_name_plural = 'categories'
+
+    def __unicode__(self):
+        return u'{}'.format(self.name)
