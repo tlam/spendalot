@@ -16,3 +16,6 @@ class Expense(models.Model):
     category = models.ForeignKey('categories.Category')
     created_at = models.DateTimeField(auto_now_add=True, default=datetime.now())
     updated_at = models.DateTimeField(auto_now=True, default=datetime.now())
+
+    def __unicode__(self):
+        return u'{}'.format(self.description)

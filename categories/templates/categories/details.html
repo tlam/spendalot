@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h4>{{ category.name }}</h4>
+
+<div id="category"></div>
+
+<input type="hidden" id="category-id" value="{{ category.id }}" />
+<input type="hidden" id="category-name" value="{{ category.name }}" />
+<input type="hidden" id="category-slug" value="{{ category.slug }}" />
+{% endblock %}

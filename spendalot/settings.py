@@ -73,8 +73,16 @@ DATABASES = {
     'default': {
         'NAME': 'spendalot',
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
+        'USER': '',
+        'PASSWORD': '',
+    }
+}
+
+CACHE = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': ['0.0.0.0:11211'],
+        'TIMEOUT': 3600,
     }
 }
 

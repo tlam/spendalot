@@ -2,4 +2,14 @@
 
 {% block content %}
 <h4>Expenses</h4>
+
+<table>
+{% for expense in expenses %}
+  <tr>
+    <td>{{ expense.description }}</td>
+    <td>{{ expense.category }}</td>
+    <td>{{ expense.date }}</td>
+  </tr>
+{% endfor %}
+</table>
 {% endblock %}
