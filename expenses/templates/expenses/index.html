@@ -13,7 +13,7 @@
     </tr>
   {% for expense in expenses %}
     <tr>
-      <td>{{ expense.date|date:"l d" }}</td>
+      <td>{{ expense.date|date:"l, d F" }}</td>
       <td class="description">{{ expense.description }}</td>
       <td class="amount">{{ expense.amount }}</td>
       <td class="category">{{ expense.category }}</td>

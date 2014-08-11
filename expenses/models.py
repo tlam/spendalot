@@ -5,6 +5,9 @@ from django.core.cache import cache
 from django.db import models
 import pandas as pd
 
+from keywords.models import Keyword
+
+
 PAYMENT_CHOICES = (
     ('CA', 'Cash'),
     ('CC', 'Credit Card'),
@@ -16,9 +19,12 @@ class Expense(models.Model):
     payment = models.CharField(max_length=5, choices=PAYMENT_CHOICES)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateField()
-    category = models.ForeignKey('categories.Category')
+    category = models.ForeignKey('categories.Category', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, default=datetime.now())
     updated_at = models.DateTimeField(auto_now=True, default=datetime.now())
+
+    class Meta:
+        ordering = ['-date']
 
     def __unicode__(self):
         return u'{}'.format(self.description)
@@ -70,3 +76,12 @@ class Expense(models.Model):
         data = sorted(data.iteritems())
         data.reverse()
         return data
+
+    @classmethod
+    def assign_categories(self):
+        keywords = Keyword.objects.all()
+        for expense in Expense.objects.filter(category=None):
+            for keyword in keywords:
+                if keyword.words.lower() in expense.description.lower():
+                    expense.category = keyword.category
+                    expense.save()

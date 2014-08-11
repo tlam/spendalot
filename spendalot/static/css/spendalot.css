@@ -1,3 +1,12 @@
+ul.messages {
+  margin-left: 2.5em;
+  width: 90%;
+}
+
+ul.messages li {
+  list-style-type: none;
+}
+
 td.description {
   width: 30em;
 }
