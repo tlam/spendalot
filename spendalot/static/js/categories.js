@@ -6,40 +6,34 @@ Object.size = function(obj) {
     return size;
 };
 
-function drawCategory() {
-  var categoryId = $("#category-id").val();
-  var categoryName = $("#category-name").val();
-  var categorySlug = $("#category-slug").val();
+function CategoryCtrl($scope, $attrs) {
+  $scope.drawChart = function() {
+    // Create and populate the data table.
+    var data = new google.visualization.DataTable();
+            
+    data.addColumn("string", $attrs.category);
+    data.addColumn("number", $attrs.category); 
+           
+    $.getJSON("/categories/" + $attrs.slug + ".json", function(monthly_data) {
+      var amountData = monthly_data['Amount'];
+      data.addRows(Object.size(amountData));
 
-  if (categoryId == undefined || categoryName == undefined || categorySlug == undefined) {
-    return 0;
-  }
-
-  // Create and populate the data table.
-  var data = new google.visualization.DataTable();
-        
-  data.addColumn("string", categoryName);
-  data.addColumn("number", categoryName); 
-       
-  $.getJSON("/categories/" + categorySlug + ".json", function(monthly_data) {
-    var amountData = monthly_data['Amount'];
-    data.addRows(Object.size(amountData));
-
-    var j = 0;
-    $.each(amountData, function(month, sum) {
+      var j = 0;
+      $.each(amountData, function(month, sum) {
         data.setValue(j, 0, month);
         data.setValue(j, 1, parseFloat(sum));
         ++j;
-    });
+      });
 
-    // Create and draw the visualization.
-    new google.visualization.ColumnChart(document.getElementById('category')).
-      draw(data,
-       {title: categoryName + " spending by month", 
-        width:800, height:400,
-        hAxis: {title: "Month"},
-        vAxis: {title: "Amount"}}
-      );
-  });
+      // Create and draw the visualization.
+      new google.visualization.ColumnChart(document.getElementById('category')).
+        draw(data,
+         {title: $attrs.category + " spending by month", 
+          width:800, height:400,
+          hAxis: {title: "Month"},
+          vAxis: {title: "Amount"}}
+        );
+    });
+  }
+  $scope.drawChart();
 }
-google.setOnLoadCallback(drawCategory);

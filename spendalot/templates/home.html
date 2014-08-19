@@ -2,6 +2,7 @@
 
 {% block content %}
 <h4>Home</h4>
-
-<div id="chart_div"></div>
+<div ng-controller="ChartCtrl" category="Pie">
+  <div id="pie"></div>
+</div>
 {% endblock %}
