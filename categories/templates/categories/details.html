@@ -3,9 +3,14 @@
 {% block content %}
 <h4>{{ category.name }}</h4>
 
-<div id="category"></div>
-
-<input type="hidden" id="category-id" value="{{ category.id }}" />
-<input type="hidden" id="category-name" value="{{ category.name }}" />
-<input type="hidden" id="category-slug" value="{{ category.slug }}" />
+<div ng-controller="CategoryCtrl" slug="{{ category.slug }}">
+  <div id="monthly-category"></div>
+  <div id="yearly-category"></div>
+  <div>
+    <b>Monthly mean:</b> {[{monthlyMean}]}
+  </div>
+  <div>
+    <b>Yearly mean:</b> {[{yearlyMean}]}
+  </div>
+</div>
 {% endblock %}

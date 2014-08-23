@@ -6,34 +6,58 @@ Object.size = function(obj) {
     return size;
 };
 
-function CategoryCtrl($scope, $attrs) {
-  $scope.drawChart = function() {
+function CategoryCtrl($scope, $http, $attrs) {
+
+  $http.get('/categories/' + $attrs.slug + '.json').success(function(data) {
     // Create and populate the data table.
-    var data = new google.visualization.DataTable();
-            
-    data.addColumn("string", $attrs.category);
-    data.addColumn("number", $attrs.category); 
-           
-    $.getJSON("/categories/" + $attrs.slug + ".json", function(monthly_data) {
-      var amountData = monthly_data['Amount'];
-      data.addRows(Object.size(amountData));
+    var monthlyDataTable = new google.visualization.DataTable();
+    var yearlyDataTable = new google.visualization.DataTable();
+    var category = data.category;
+    var name = category.name;
+    var monthlyData = data.monthly.Amount;
+    var yearlyData = data.yearly.Amount;
+    console.log(monthlyData);
+    console.log(yearlyData);
+    $scope.monthlyMean = category.monthly_mean;
+    $scope.yearlyMean = category.yearly_mean;
 
-      var j = 0;
-      $.each(amountData, function(month, sum) {
-        data.setValue(j, 0, month);
-        data.setValue(j, 1, parseFloat(sum));
-        ++j;
-      });
+    monthlyDataTable.addColumn('string', name);
+    monthlyDataTable.addColumn('number', name); 
+    monthlyDataTable.addRows(Object.size(monthlyData));
 
-      // Create and draw the visualization.
-      new google.visualization.ColumnChart(document.getElementById('category')).
-        draw(data,
-         {title: $attrs.category + " spending by month", 
-          width:800, height:400,
-          hAxis: {title: "Month"},
-          vAxis: {title: "Amount"}}
-        );
+    var j = 0;
+    $.each(monthlyData, function(month, sum) {
+      monthlyDataTable.setValue(j, 0, month);
+      monthlyDataTable.setValue(j, 1, parseFloat(sum));
+      ++j;
     });
-  }
-  $scope.drawChart();
+
+    // Create and draw the visualization.
+    new google.visualization.ColumnChart(document.getElementById('monthly-category')).
+      draw(monthlyDataTable,
+       {title: name + ' spending by month',
+        width: 800, height: 400,
+        hAxis: {title: 'Month'},
+        vAxis: {title: 'Amount'}}
+    );
+
+    yearlyDataTable.addColumn('string', name);
+    yearlyDataTable.addColumn('number', name); 
+    yearlyDataTable.addRows(Object.size(yearlyData));
+
+    var j = 0;
+    $.each(yearlyData, function(month, sum) {
+      yearlyDataTable.setValue(j, 0, month);
+      yearlyDataTable.setValue(j, 1, parseFloat(sum));
+      ++j;
+    });
+
+    new google.visualization.ColumnChart(document.getElementById('yearly-category')).
+      draw(yearlyDataTable,
+       {title: name + ' spending by year',
+        width: 800, height: 400,
+        hAxis: {title: 'Year'},
+        vAxis: {title: 'Amount'}}
+    );
+  });
 }
