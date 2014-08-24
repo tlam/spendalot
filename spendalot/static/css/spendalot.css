@@ -8,17 +8,22 @@ ul.messages li {
 }
 
 td.description {
-  width: 30em;
+  width: 28em;
 }
 
-td.amount {
-  width: 10em;
+.amount {
+  text-align: right;
+  width: 5em;
 }
 
 td.category {
-  width: 20em;
+  width: 8em;
 }
 
 .sub-header {
   font-size: 80%;
+}
+
+div#expenses {
+  width: 75%;
 }
