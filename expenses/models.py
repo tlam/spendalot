@@ -67,7 +67,8 @@ class Expense(models.Model):
     def monthly(self, year=datetime.now().year):
         data = {}
         start_date = datetime(year, 1, 1)
-        for expense in self.cached().filter(date__gte=start_date):
+        end_date = datetime(year, 12, 31)
+        for expense in self.cached().filter(date__gte=start_date, date__lte=end_date):
             month = expense.date.strftime('%B %Y')
             month = datetime(expense.date.year, expense.date.month, 1)
             if not month in data:
@@ -85,3 +86,10 @@ class Expense(models.Model):
                 if keyword.words.lower() in expense.description.lower():
                     expense.category = keyword.category
                     expense.save()
+
+    @classmethod
+    def year_range(self):
+        expenses = self.cached()
+        min_date = expenses.aggregate(models.Min('date'))
+        max_date = expenses.aggregate(models.Max('date'))
+        return  range(min_date['date__min'].year, max_date['date__max'].year + 1)

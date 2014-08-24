@@ -18,3 +18,7 @@ td.amount {
 td.category {
   width: 20em;
 }
+
+.sub-header {
+  font-size: 80%;
+}

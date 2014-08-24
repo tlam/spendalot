@@ -31,3 +31,14 @@ function ChartCtrl($scope, $attrs) {
   }
   $scope.drawChart();
 }
+
+$(function() {
+  $("#id_date").datepicker();
+
+  $("#id_description").autocomplete({
+    source: "/expenses/descriptions.json",
+    minLength: 2,
+    select: function(event, ui) {
+    }
+  });
+});
