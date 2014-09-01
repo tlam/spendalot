@@ -5,10 +5,10 @@
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
     <link rel="stylesheet" href="{{ STATIC_URL }}css/spendalot.css" type="text/css" />
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="https://www.google.com/jsapi" type="text/javascript"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
     <script type="text/javascript">
       google.load('visualization', '1', {packages: ['corechart']});
     </script>
@@ -20,6 +20,7 @@
       <li {% if '/' == request.path %}class="active"{% endif %}><a href="{% url 'home' %}">Home</a></li>
       <li {% if 'categories' in request.path %}class="active"{% endif %}><a href="{% url 'categories:index' %}">Categories</a></li>
       <li {% if 'expenses' in request.path %}class="active"{% endif %}><a href="{% url 'expenses:index' %}">Expenses</a></li>
+      <li {% if 'trends' in request.path %}class="active"{% endif %}><a href="{% url 'expenses:trends' %}">Trends</a></li>
       <li {% if 'statements' in request.path %}class="active"{% endif %}><a href="{% url 'statements:index' %}">Statements</a></li>
     </ul>
     {% if messages %}

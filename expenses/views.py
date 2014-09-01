@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
-from expenses.forms import ExpenseForm
+from expenses.forms import ExpenseForm, TrendsForm
 from expenses.models import Expense
 
 
@@ -53,3 +53,35 @@ def descriptions(request):
         data = []
 
     return HttpResponse(json.dumps(data), mimetype='application/javascript')
+
+
+def category(request):
+    description = request.GET.get('description', '')
+    data = {
+        'category_id': 0,
+    }
+    if description:
+        expenses = Expense.cached().filter(description=description)
+        if expenses:
+            data['category_id'] = expenses[0].category.id
+
+    return HttpResponse(json.dumps(data), mimetype='application/javascript')
+
+
+def trends(request):
+    context = {'expenses': []}
+    if request.method == 'POST':
+        form = TrendsForm(request.POST)
+        if form.is_valid():
+            description = form.cleaned_data['description']
+            context['expenses'] = Expense.cached().filter(description__icontains=description).order_by('-date')
+    else:
+        form = TrendsForm()
+
+    context['form'] = form
+
+    return render(
+        request,
+        'expenses/trends.html',
+        context,
+    )
