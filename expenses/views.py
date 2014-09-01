@@ -1,7 +1,9 @@
 from datetime import datetime
+from decimal import Decimal
 import json
 
 from django.contrib import messages
+from django.db.models import Sum
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
@@ -74,7 +76,9 @@ def trends(request):
         form = TrendsForm(request.POST)
         if form.is_valid():
             description = form.cleaned_data['description']
-            context['expenses'] = Expense.cached().filter(description__icontains=description).order_by('-date')
+            expenses = Expense.cached().filter(description__icontains=description).order_by('-date')
+            context['sum'] = expenses.aggregate(expenses_sum=Sum('amount')).get('expenses_sum', Decimal(0))
+            context['expenses'] = expenses
     else:
         form = TrendsForm()
 

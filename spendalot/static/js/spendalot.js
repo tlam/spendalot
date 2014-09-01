@@ -1,5 +1,5 @@
 // Load the Visualization API and the piechart package.
-//google.load('visualization', '1.0', {'packages':['corechart']});
+google.load('visualization', '1.0', {'packages':['corechart']});
 
 angular.module('spendalot-app', []).config(function($interpolateProvider) {
   $interpolateProvider.startSymbol('{[{');
@@ -45,7 +45,7 @@ $(function() {
   $('#id_description').focusout(function() {
     $.getJSON('/expenses/category.json', {"description": $(this).val()}, function(data) {
       if (data.category_id) {
-        $('#id_category').val(category_id);
+        $('#id_category').val(data.category_id);
       }
     });
   });
