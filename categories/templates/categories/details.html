@@ -6,11 +6,16 @@
 <div ng-controller="CategoryCtrl" slug="{{ category.slug }}">
   <div id="monthly-category"></div>
   <div id="yearly-category"></div>
-  <div>
-    <b>Monthly mean:</b> {[{monthlyMean}]}
-  </div>
-  <div>
-    <b>Yearly mean:</b> {[{yearlyMean}]}
+  <div id="category-stats">
+    <div>
+      <b>Monthly mean:</b> {[{monthlyMean}]}
+    </div>
+    <div>
+      <b>Yearly mean:</b> {[{yearlyMean}]}
+    </div>
+    <div>
+      <b>Sum:</b> {[{sum}]}
+    </div>
   </div>
 </div>
 {% endblock %}

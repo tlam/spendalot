@@ -27,3 +27,9 @@ td.category {
 div#expenses {
   width: 75%;
 }
+
+div#category-stats {
+  position: absolute;
+  left: 900px;
+  top: 100px;
+}

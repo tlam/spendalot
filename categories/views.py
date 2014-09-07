@@ -38,6 +38,7 @@ def details_json(request, slug):
     category_data = {
         'name': category,
         'monthly_mean': '{0:.2f}'.format(monthly_mean),
+        'sum': '{0:.2f}'.format(categories.get_group(category).sum()['Amount']),
         'yearly_mean': '{0:.2f}'.format(yearly_mean),
     }
 

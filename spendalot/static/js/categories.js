@@ -16,9 +16,9 @@ function CategoryCtrl($scope, $http, $attrs) {
     var name = category.name;
     var monthlyData = data.monthly.Amount;
     var yearlyData = data.yearly.Amount;
-    console.log(monthlyData);
-    console.log(yearlyData);
+
     $scope.monthlyMean = category.monthly_mean;
+    $scope.sum = category.sum;
     $scope.yearlyMean = category.yearly_mean;
 
     monthlyDataTable.addColumn('string', name);
