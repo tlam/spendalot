@@ -54,7 +54,7 @@ def descriptions(request):
     else:
         data = []
 
-    return HttpResponse(json.dumps(data), mimetype='application/javascript')
+    return HttpResponse(json.dumps(data), content_type='application/javascript')
 
 
 def category(request):
@@ -67,7 +67,7 @@ def category(request):
         if expenses:
             data['category_id'] = expenses[0].category.id
 
-    return HttpResponse(json.dumps(data), mimetype='application/javascript')
+    return HttpResponse(json.dumps(data), content_type='application/javascript')
 
 
 def trends(request):

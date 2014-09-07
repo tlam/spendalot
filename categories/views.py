@@ -50,4 +50,4 @@ def details_json(request, slug):
         }}
     '''.format(json.dumps(category_data), monthly.to_json(), yearly.to_json())
 
-    return HttpResponse(json_data, mimetype='application/javascript')
+    return HttpResponse(json_data, content_type='application/javascript')
