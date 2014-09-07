@@ -17,11 +17,13 @@
   </head>
   <body>
     <ul class="nav nav-pills container">
-      <li {% if '/' == request.path %}class="active"{% endif %}><a href="{% url 'home' %}">Home</a></li>
-      <li {% if 'categories' in request.path %}class="active"{% endif %}><a href="{% url 'categories:index' %}">Categories</a></li>
-      <li {% if 'expenses' in request.path %}class="active"{% endif %}><a href="{% url 'expenses:index' %}">Expenses</a></li>
-      <li {% if 'trends' in request.path %}class="active"{% endif %}><a href="{% url 'expenses:trends' %}">Trends</a></li>
-      <li {% if 'statements' in request.path %}class="active"{% endif %}><a href="{% url 'statements:index' %}">Statements</a></li>
+    {% with view_name=request.resolver_match.view_name %}
+      <li {% if view_name == 'home' %}class="active"{% endif %}><a href="{% url 'home' %}">Home</a></li>
+      <li {% if view_name ==  'categories:index' %}class="active"{% endif %}><a href="{% url 'categories:index' %}">Categories</a></li>
+      <li {% if view_name == 'expenses:index' %}class="active"{% endif %}><a href="{% url 'expenses:index' %}">Expenses</a></li>
+      <li {% if view_name == 'expenses:trends' %}class="active"{% endif %}><a href="{% url 'expenses:trends' %}">Trends</a></li>
+      <li {% if view_name == 'statements:index' %}class="active"{% endif %}><a href="{% url 'statements:index' %}">Statements</a></li>
+    {% endwith %}
     </ul>
     {% if messages %}
     <ul class="messages">
