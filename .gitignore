@@ -2,3 +2,4 @@
 *.swp
 data.csv
 dev_settings.py
+spendalot/static/data_sources/

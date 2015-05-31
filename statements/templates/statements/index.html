@@ -8,4 +8,8 @@
   <input type="submit" name="import-data" value="Import" />
 </form>
 
+<h4>Dropbox</h4>
+<form action="{% url 'statements:index' %}" method="post">{% csrf_token %}
+  <input type="submit" name="dropbox-data" value="Import" />
+</form>
 {% endblock %}

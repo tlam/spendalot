@@ -20,8 +20,8 @@ class Expense(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateField()
     category = models.ForeignKey('categories.Category', null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True, default=datetime.now())
-    updated_at = models.DateTimeField(auto_now=True, default=datetime.now())
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ['-date']
@@ -45,6 +45,7 @@ class Expense(models.Model):
             writer = csv.writer(csvfile)
             writer.writerow(['Description', 'Category', 'Amount', 'Date', 'Payment'])
             for expense in expenses:
+                print expense.id
                 writer.writerow([
                     expense.description.encode('utf-8'),
                     expense.category.name,
