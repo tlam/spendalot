@@ -45,7 +45,8 @@ class Expense(models.Model):
             writer = csv.writer(csvfile)
             writer.writerow(['Description', 'Category', 'Amount', 'Date', 'Payment'])
             for expense in expenses:
-                print expense.id
+                if not expense.category:
+                    continue
                 writer.writerow([
                     expense.description.encode('utf-8'),
                     expense.category.name,
