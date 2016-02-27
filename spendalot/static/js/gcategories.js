@@ -6,8 +6,7 @@ Object.size = function(obj) {
     return size;
 };
 
-function CategoryCtrl($scope, $http, $attrs) {
-
+angular.module('spendalot-app').controller('CategoryCtrl', function($scope, $http, $attrs) {
   $http.get('/categories/' + $attrs.slug + '.json').success(function(data) {
     // Create and populate the data table.
     var monthlyDataTable = new google.visualization.DataTable();
@@ -60,4 +59,4 @@ function CategoryCtrl($scope, $http, $attrs) {
         vAxis: {title: 'Amount'}}
     );
   });
-}
+});
