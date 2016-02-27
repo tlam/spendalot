@@ -5,7 +5,19 @@
 
 <div ng-controller="CategoryCtrl" slug="{{ category.slug }}">
   <div id="monthly-category"></div>
+  <div class="chart">
+    <div class="yaxis">Amount</div>
+    <canvas id="monthly-chart" width="750" height="350"></canvas>
+    <div class="xaxis">Year</div>
+  </div>
+
   <div id="yearly-category"></div>
+  <div class="chart">
+    <div class="yaxis">Amount</div>
+    <canvas id="yearly-chart" width="600" height="350"></canvas>
+    <div class="xaxis">Year</div>
+  </div>
+
   <div id="category-stats">
     <div>
       <b>Monthly mean:</b> {[{monthlyMean}]}
@@ -15,6 +27,12 @@
     </div>
     <div>
       <b>Sum:</b> {[{sum}]}
+    </div>
+
+    <div class="categories list-group">
+    {% for c in categories %}
+      <a href="{% url 'categories:details' c.slug %}" class="list-group-item {% if c.name == category.name %}active{% endif %}">{{ c.name }}</a>
+    {% endfor %}
     </div>
   </div>
 </div>

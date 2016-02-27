@@ -33,3 +33,31 @@ div#category-stats {
   left: 900px;
   top: 100px;
 }
+
+div.yaxis {
+  float: left;
+  font-style: italic;
+  margin-top: 15em;
+  transform: rotate(-90deg);
+  transform-origin: left top 0;
+}
+
+div.xaxis {
+  margin-top: 1em;
+  margin-left: 15em;
+  font-style: italic;
+}
+
+div.categories {
+  margin-top: 1em;
+}
+
+.pie-legend li span {
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    margin-right: 5px;
+}
+.pie-legend {
+    list-style: none;    
+}

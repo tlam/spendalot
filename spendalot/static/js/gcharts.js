@@ -1,13 +1,7 @@
 // Load the Visualization API and the piechart package.
 google.load('visualization', '1.0', {'packages':['corechart']});
 
-var app = angular.module('spendalot-app', []);
-app.config(function($interpolateProvider) {
-  $interpolateProvider.startSymbol('{[{');
-  $interpolateProvider.endSymbol('}]}');
-});
-
-app.controller('ChartCtrl', function($scope) {
+angular.module('spendalot-app').controller('ChartCtrl', function($scope, $http) {
   $scope.toppings = [
     ['Mushrooms', 3],
     ['Onions', 1],
