@@ -1,5 +1,6 @@
 from datetime import datetime
 from decimal import Decimal
+import csv
 import json
 
 from django.contrib import messages
@@ -89,3 +90,14 @@ def trends(request):
         'expenses/trends.html',
         context,
     )
+
+
+def download_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="expenses.csv"'
+
+    writer = csv.writer(response)
+    for expense in Expense.objects.all():
+        writer.writerow([expense.description.encode('utf-8'), expense.category.name])
+
+    return response

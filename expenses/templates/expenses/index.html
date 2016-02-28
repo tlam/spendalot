@@ -1,7 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Expenses - <a href="{% url 'expenses:create' %}" class="sub-header">Create</a></h2>
+<div id="expenses-header">
+  <h2>
+  Expenses - <a href="{% url 'expenses:create' %}" class="sub-header">Create</a>
+  </h2>
+  <div id="expenses-csv">
+    <a class="btn btn-default" href="{% url 'expenses:download-csv' %}">CSV</a>
+  </div>
+</div>
 
 {% for year in year_range %}
   <a href="?year={{ year }}">{{ year }}</a>

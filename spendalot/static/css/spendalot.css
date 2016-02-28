@@ -53,11 +53,26 @@ div.categories {
 }
 
 .pie-legend li span {
-    width: 1em;
-    height: 1em;
-    display: inline-block;
-    margin-right: 5px;
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  margin-right: 5px;
 }
+
 .pie-legend {
-    list-style: none;    
+  list-style: none;    
+}
+
+div#expenses-header {
+  overflow: auto;
+}
+
+div#expenses-header h2 {
+  float: left;
+}
+
+div#expenses-csv {
+  float: right;
+  margin-top: 1.5em;
+  margin-right: 10em;
 }

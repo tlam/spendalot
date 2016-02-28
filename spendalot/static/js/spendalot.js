@@ -5,12 +5,13 @@ app.config(function($interpolateProvider) {
 });
 
 function getRandomColour() {
-    var letters = '0123456789ABCDEF'.split('');
-    var color = '#';
-    for (var i = 0; i < 6; i++ ) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
+  // Reference: http://stackoverflow.com/a/1484514/117642
+  var letters = '0123456789ABCDEF'.split('');
+  var color = '#';
+  for (var i = 0; i < 6; i++ ) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
 }
 
 angular.module('spendalot-app').controller('ChartCtrl', function($scope, $http) {
