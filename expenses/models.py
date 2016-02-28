@@ -7,7 +7,8 @@ from django.core.cache import cache
 from django.db import models
 import pandas as pd
 
-from keywords.models import Keyword
+from categories.models import Category
+from data_sources.learn import Learn
 from spendalot import constants
 
 DATA_PATH = os.path.join(settings.BASE_DIR, 'data_sources', 'data.csv')
@@ -86,12 +87,16 @@ class Expense(models.Model):
 
     @classmethod
     def assign_categories(self):
-        keywords = Keyword.objects.all()
+        categories = {}
+        for category in Category.objects.all():
+            categories[category.name] = category
+
+        learn = Learn()
         for expense in Expense.objects.filter(category=None):
-            for keyword in keywords:
-                if keyword.words.lower() in expense.description.lower():
-                    expense.category = keyword.category
-                    expense.save()
+            prediction = learn.predict(expense.description.lower())
+            if prediction:
+                expense.category = categories[prediction]
+                expense.save()
 
     @classmethod
     def year_range(self):

@@ -7,6 +7,10 @@ ul.messages li {
   list-style-type: none;
 }
 
+ul#navigation {
+  margin-top: 0.5em;
+}
+
 td.description {
   width: 28em;
 }

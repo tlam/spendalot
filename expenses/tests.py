@@ -50,7 +50,7 @@ class ExpenseTestCase(TestCase):
     def test_write_csv(self):
         Expense.write_csv()
         fp = open(DATA_PATH, 'r')
-        self.assertTrue('Spotify,Clothing' in fp.read())
+        self.assertTrue('Spotify,Entertainment' in fp.read())
         fp.close()
 
     def test_data_frame(self):
@@ -63,3 +63,18 @@ class ExpenseTestCase(TestCase):
 
     def test_year_range(self):
         self.assertEqual(Expense.year_range(), [2016])
+
+    def test_assign_categories(self):
+        for i in range(0, 3):
+            expense = Expense.objects.create(
+                description='Spotify {}'.format(i + 1),
+                payment=constants.CREDIT_CARD,
+                amount=Decimal('9.99'),
+                date=datetime.now(),
+            )
+            self.assertIsNone(expense.category)
+
+        Expense.assign_categories()
+
+        for expense in Expense.objects.all():
+            self.assertEqual(expense.category.name, 'Entertainment')

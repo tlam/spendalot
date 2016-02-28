@@ -46,7 +46,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'spendalot',
     'categories',
-    'keywords',
     'expenses',
     'statements',
     'data_sources',

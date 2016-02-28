@@ -2,3 +2,5 @@ django==1.8.9
 psycopg2
 pandas
 dropbox
+scipy
+scikit-learn
