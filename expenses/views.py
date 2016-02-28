@@ -10,6 +10,7 @@ from django.shortcuts import redirect, render
 
 from expenses.forms import ExpenseForm, TrendsForm
 from expenses.models import Expense
+from spendalot import constants
 
 
 def index(request):
@@ -31,7 +32,7 @@ def create(request):
         form = ExpenseForm(request.POST)
         if form.is_valid():
             expense = form.save()
-            expense.payment = 'CA'
+            expense.payment = constants.CASH
             expense.save()
             messages.success(request, 'Expense created')
             return redirect('expenses:create')

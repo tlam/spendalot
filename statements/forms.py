@@ -6,12 +6,13 @@ from django import forms
 
 from categories.models import Category
 from expenses.models import Expense
-
+from spendalot import constants
 
 HEADERS = {
     'historical': ['Description', 'Category', 'Amount', 'Date', 'Payment'],
     'mastercard': ['Transaction Date', 'Posting Date', 'Billing Amount', 'Merchant', 'Merchant City', 'Merchant State', 'Merchant Zip', 'Reference Number', 'Debit/Credit Flag', 'SICMCC Code'],
 }
+
 
 class UploadFileForm(forms.Form):
     file = forms.FileField()
@@ -28,8 +29,6 @@ class UploadFileForm(forms.Form):
                     parsing = 'historical'
                 elif header[0] == HEADERS['mastercard'][0]:
                     parsing = 'mastercard'
-                print parsing
-                print header
                 continue
 
             if not parsing:
@@ -58,7 +57,7 @@ class UploadFileForm(forms.Form):
 
                 Expense.objects.create(
                     description=description,
-                    payment='CC',
+                    payment=constants.CREDIT_CARD,
                     amount=amount,
                     date=date,
                 )

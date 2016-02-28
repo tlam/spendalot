@@ -1,16 +1,19 @@
 from datetime import datetime
 import csv
+import os
 
+from django.conf import settings
 from django.core.cache import cache
 from django.db import models
 import pandas as pd
 
 from keywords.models import Keyword
+from spendalot import constants
 
-
+DATA_PATH = os.path.join(settings.BASE_DIR, 'data_sources', 'data.csv')
 PAYMENT_CHOICES = (
-    ('CA', 'Cash'),
-    ('CC', 'Credit Card'),
+    (constants.CASH, 'Cash'),
+    (constants.CREDIT_CARD, 'Credit Card'),
 )
 
 
@@ -35,13 +38,14 @@ class Expense(models.Model):
             return cache.get('expenses')
         else:
             expenses = Expense.objects.order_by('-date')
-            cache.set('expenses', expenses)
+            if expenses:
+                cache.set('expenses', expenses)
             return expenses
 
     @classmethod
     def write_csv(self):
         expenses = self.cached()
-        with open('data.csv', 'wb') as csvfile:
+        with open(DATA_PATH, 'wb') as csvfile:
             writer = csv.writer(csvfile)
             writer.writerow(['Description', 'Category', 'Amount', 'Date', 'Payment'])
             for expense in expenses:
@@ -61,7 +65,7 @@ class Expense(models.Model):
             return cache.get('data_frame')
         else:
             Expense.write_csv()
-            df = pd.read_csv('data.csv', parse_dates=['Date'], index_col='Date')
+            df = pd.read_csv(DATA_PATH, parse_dates=['Date'], index_col='Date')
             cache.set('data_frame', df)
             return df
 
@@ -94,4 +98,4 @@ class Expense(models.Model):
         expenses = self.cached()
         min_date = expenses.aggregate(models.Min('date'))
         max_date = expenses.aggregate(models.Max('date'))
-        return  range(min_date['date__min'].year, max_date['date__max'].year + 1)
+        return range(min_date['date__min'].year, max_date['date__max'].year + 1)

@@ -7,6 +7,7 @@ from django.conf import settings
 import dropbox
 
 from expenses.models import Expense
+from spendalot import constants
 
 
 class DropboxClient(object):
@@ -56,7 +57,7 @@ class DropboxClient(object):
 
                 Expense.objects.create(
                     description=description,
-                    payment='CA',
+                    payment=constants.CASH,
                     amount=amount,
                     date=transaction_date,
                 )
