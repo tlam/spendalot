@@ -8,4 +8,6 @@
   <li><a href="{% url 'categories:details' category.slug %}">{{ category.name }}</a></li>
 {% endfor %}
 </ol>
+
+<a href="{% url 'categories:prediction' %}">Prediction</a>
 {% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h4>Category Prediction</h4>
+
+<form action="{% url 'categories:prediction' %}" method="post">{% csrf_token %}
+  {{ form }}
+  <input type="submit" value="Predict" />
+  <div>
+  {% if category %}
+    <b>Predicted category:</b> {{ category }}
+  {% endif %}
+  </div>
+</form>
+{% endblock %}

@@ -4,6 +4,8 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 from categories.models import Category
+from categories.forms import PredictionForm
+from data_sources.learn import Learn
 from expenses.models import Expense
 
 
@@ -65,3 +67,20 @@ def categories_json(request):
 
     json_data = json.dumps(data)
     return HttpResponse(json_data, content_type='application/javascript')
+
+
+def prediction(request):
+    category = ''
+    if request.method == 'POST':
+        form = PredictionForm(request.POST)
+        if form.is_valid():
+            keywords = form.cleaned_data['keywords']
+            learn = Learn()
+            category = learn.predict(keywords)
+    else:
+        form = PredictionForm()
+    context = {
+        'category': category,
+        'form': form,
+    }
+    return render(request, 'categories/prediction.html', context)

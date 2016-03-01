@@ -28,6 +28,7 @@ print unique_categories
 clf = MultinomialNB().fit(X_train_tfidf, target)
 
 search_terms = ['tim hortons', 'ihop', 'loblaws', 'shoppers', 'Enterprise', 'deer', 'europe bound']
+search_terms = ['loblaws']
 X_new_counts = count_vect.transform(search_terms)
 X_new_tfidf = tfidf_transformer.transform(X_new_counts)
 

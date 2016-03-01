@@ -8,9 +8,12 @@ angular.module('spendalot-app').controller('CategoryCtrl', function($scope, $htt
     $scope.sum = category.sum;
     $scope.yearlyMean = category.yearly_mean;
 
-    var monthOptions = {};
+    var monthOptions = {
+      animation: false
+    };
     var yearOptions = {
       barValueSpacing: 10,
+      animation: false
     };
     var monthData = {
       labels: [],

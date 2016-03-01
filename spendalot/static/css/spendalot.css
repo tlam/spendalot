@@ -33,9 +33,11 @@ div#expenses {
 }
 
 div#category-stats {
+/*
   position: absolute;
   left: 900px;
   top: 100px;
+  */
 }
 
 div.yaxis {
@@ -47,7 +49,7 @@ div.yaxis {
 }
 
 div.xaxis {
-  margin-top: 1em;
+  margin-top: 0.5em;
   margin-left: 15em;
   font-style: italic;
 }
@@ -79,4 +81,8 @@ div#expenses-csv {
   float: right;
   margin-top: 1.5em;
   margin-right: 10em;
+}
+
+div#yearly-category {
+  margin-top: 1em;
 }
