@@ -5,6 +5,7 @@ import os
 from django.conf import settings
 from django.core.cache import cache
 from django.db import models
+from django.utils import timezone
 import pandas as pd
 
 from categories.models import Category
@@ -32,6 +33,10 @@ class Expense(models.Model):
 
     def __unicode__(self):
         return u'{}'.format(self.description)
+
+    @property
+    def recently_added(self):
+        return (timezone.now() - self.created_at).seconds <= 60 * 30
 
     @classmethod
     def cached(self):

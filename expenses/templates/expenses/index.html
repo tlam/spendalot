@@ -26,7 +26,7 @@
       <th class="amount">Amount</th>
     </tr>
   {% for expense in expenses %}
-    <tr>
+    <tr {% if expense.recently_added %}class="recently-added"{% endif %}>
       <td>{{ expense.date|date:"l, d F" }}</td>
       <td class="description"><a href="{% url 'admin:expenses_expense_change' expense.id %}">{{ expense.description }}</a></td>
       <td class="category">{{ expense.category }}</td>

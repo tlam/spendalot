@@ -86,3 +86,7 @@ div#expenses-csv {
 div#yearly-category {
   margin-top: 1em;
 }
+
+tr.recently-added {
+  background-color: #faebd7;
+}
