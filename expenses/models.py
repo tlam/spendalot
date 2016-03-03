@@ -36,7 +36,8 @@ class Expense(models.Model):
 
     @property
     def recently_added(self):
-        return (timezone.now() - self.created_at).seconds <= 60 * 30
+        # Recently added within the last hour
+        return (timezone.now() - self.created_at).seconds <= 60 * 60
 
     @classmethod
     def cached(self):
