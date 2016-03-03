@@ -81,13 +81,11 @@ class Expense(models.Model):
         start_date = datetime(year, 1, 1)
         end_date = datetime(year, 12, 31)
         for expense in self.cached().filter(date__gte=start_date, date__lte=end_date):
-            month = expense.date.strftime('%B %Y')
             month = datetime(expense.date.year, expense.date.month, 1)
             if not month in data:
                 data[month] = []
             data[month].append(expense)
-        data = sorted(data.iteritems())
-        data.reverse()
+        data = sorted(data.iteritems(), reverse=True)
         return data
 
     @classmethod
@@ -99,7 +97,7 @@ class Expense(models.Model):
         learn = Learn()
         for expense in Expense.objects.filter(category=None):
             prediction = learn.predict(expense.description.lower())
-            if prediction:
+            if prediction in categories:
                 expense.category = categories[prediction]
                 expense.save()
 

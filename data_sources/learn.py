@@ -8,7 +8,6 @@ from sklearn.pipeline import Pipeline
 import pandas as pd
 
 
-
 class Learn(object):
 
     def __init__(self, refresh=False):
@@ -31,9 +30,9 @@ class Learn(object):
         target = le.transform(categories)
 
         self.text_clf = Pipeline([
-            ('vect', CountVectorizer()),
-            ('tfidf', TfidfTransformer()),
-            ('clf', SGDClassifier(loss='hinge', penalty='l2', alpha=1e-3, n_iter=5, random_state=42)),
+            ('vect', CountVectorizer()),  # Bag of words
+            ('tfidf', TfidfTransformer()),  # term frequency-inverse document frequency
+            ('clf', SGDClassifier(loss='hinge', penalty='l2', alpha=1e-3, n_iter=5, random_state=42)),  # SVM classifier
         ])
 
         self.text_clf = self.text_clf.fit(data, target)

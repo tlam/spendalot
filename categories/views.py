@@ -30,6 +30,7 @@ def details_json(request, slug):
     categories = df.groupby('Category')
     category = Category.objects.get(slug=slug).name
     yearly = categories.get_group(category).resample('A', how='sum')
+    yearly = yearly.fillna(0)
     monthly = categories.get_group(category).resample('M', how='sum')
     monthly = monthly.fillna(0)
 
