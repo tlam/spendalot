@@ -58,4 +58,5 @@ angular.module('spendalot-app').controller('CategoryCtrl', function($scope, $htt
         hAxis: {title: 'Year'},
         vAxis: {title: 'Amount'}}
     );
+  });
 });

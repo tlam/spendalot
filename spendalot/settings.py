@@ -25,13 +25,6 @@ SECRET_KEY = 'y@x6k8n$_2y!$vd(6wx$!l1#m_p+ay)5d)wogv9x0*dvxeigln'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
-    'django.core.context_processors.request',
-)
-
-TEMPLATE_DEBUG = True
-
 ALLOWED_HOSTS = []
 
 
@@ -61,6 +54,22 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'spendalot.urls'
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
 
 WSGI_APPLICATION = 'spendalot.wsgi.application'
 

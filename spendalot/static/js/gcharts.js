@@ -2,27 +2,28 @@
 google.load('visualization', '1.0', {'packages':['corechart']});
 
 angular.module('spendalot-app').controller('ChartCtrl', function($scope, $http) {
-  $scope.toppings = [
-    ['Mushrooms', 3],
-    ['Onions', 1],
-    ['Olives', 1],
-    ['Zucchini', 1],
-    ['Pepperoni', 2]
-  ];
-    
-  $scope.drawChart = function() {
-    var data = new google.visualization.DataTable();
-    data.addColumn('string', 'Topping');
-    data.addColumn('number', 'Slices');
-    data.addRows($scope.toppings);
+  $http.get('/categories/categories.json').success(function(data) {
+    var pieData = [];
+    for (var category in data) {
+      pieData.push([category, Math.ceil(data[category])]);
+    }
+
+    $scope.drawChart = function() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Category');
+      data.addColumn('number', 'Total');
+      data.addRows(pieData);
  
-    var options = {'title':'How Much Pizza I Ate Last Night',
-                   'width':400,
-                   'height':300};
+      var options = {
+        'title':'Category Expenses',
+        'width':400,
+        'height':300
+      };
  
-    // Instantiate and draw our chart, passing in some options.
-    var chart = new google.visualization.PieChart(document.getElementById('pie'));
-    chart.draw(data, options);
-  }
-  $scope.drawChart();
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.PieChart(document.getElementById('pie'));
+      chart.draw(data, options);
+    }
+    $scope.drawChart();
+  });
 });

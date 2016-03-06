@@ -14,6 +14,7 @@ function getRandomColour() {
   return color;
 }
 
+/*
 angular.module('spendalot-app').controller('ChartCtrl', function($scope, $http) {
   $http.get('/categories/categories.json').success(function(data) {
     var ctx = $('#categories-chart').get(0).getContext('2d');
@@ -38,7 +39,7 @@ angular.module('spendalot-app').controller('ChartCtrl', function($scope, $http) 
 
   });
 });
-
+*/
 $(function() {
   $('#id_date').datepicker();
 
