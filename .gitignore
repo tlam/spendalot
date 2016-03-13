@@ -4,3 +4,4 @@ data.csv
 dev_settings.py
 expenses.csv
 spendalot/static/data_sources/
+staticfiles
