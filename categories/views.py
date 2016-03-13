@@ -64,7 +64,8 @@ def categories_json(request):
     categories = df.groupby('Category')
     data = {}
     for category in Category.objects.all():
-        data[category.name] = '{:.2f}'.format(categories.get_group(category.name).sum()['Amount'])
+        if category.name in categories.groups:
+            data[category.name] = '{:.2f}'.format(categories.get_group(category.name).sum()['Amount'])
 
     json_data = json.dumps(data)
     return HttpResponse(json_data, content_type='application/javascript')
