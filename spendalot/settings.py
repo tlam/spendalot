@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 import os
 
 from django.conf import global_settings
+import dj_database_url
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -78,12 +79,7 @@ WSGI_APPLICATION = 'spendalot.wsgi.application'
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'NAME': 'spendalot',
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'USER': '',
-        'PASSWORD': '',
-    }
+    'default': dj_database_url.config()
 }
 
 CACHE = {

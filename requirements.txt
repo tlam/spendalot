@@ -2,5 +2,8 @@ django==1.9.4
 psycopg2
 pandas
 dropbox
-scipy
-scikit-learn
+gunicorn
+dj-database-url
+dj-static
+static
+

@@ -1,11 +1,14 @@
 import csv
 import os
 
-from sklearn import preprocessing
-from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
-from sklearn.linear_model import SGDClassifier
-from sklearn.pipeline import Pipeline
-import pandas as pd
+try:
+    from sklearn import preprocessing
+    from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
+    from sklearn.linear_model import SGDClassifier
+    from sklearn.pipeline import Pipeline
+    import pandas as pd
+except ImportError:
+    pass
 
 
 class Learn(object):
