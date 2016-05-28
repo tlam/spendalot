@@ -88,5 +88,5 @@ div#yearly-category {
 }
 
 tr.recently-added {
-  background-color: #faebd7;
+  background-color: #faebd7 !important;
 }
