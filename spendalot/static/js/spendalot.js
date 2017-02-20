@@ -1,5 +1,5 @@
-var app = angular.module('spendalot-app', []);
-app.config(function($interpolateProvider) {
+var angApp = angular.module('spendalot-app', []);
+angApp.config(function($interpolateProvider) {
   $interpolateProvider.startSymbol('{[{');
   $interpolateProvider.endSymbol('}]}');
 });

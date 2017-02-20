@@ -1,5 +1,5 @@
 // Load the Visualization API and the piechart package.
-google.load('visualization', '1.0', {'packages':['corechart']});
+//google.charts.load('current', {packages: ['corechart']});
 
 angular.module('spendalot-app').controller('ChartCtrl', function($scope, $http) {
   $http.get('/categories/categories.json').success(function(data) {
@@ -24,6 +24,6 @@ angular.module('spendalot-app').controller('ChartCtrl', function($scope, $http) 
       var chart = new google.visualization.PieChart(document.getElementById('pie'));
       chart.draw(data, options);
     }
-    $scope.drawChart();
+    google.charts.setOnLoadCallback($scope.drawChart);
   });
 });

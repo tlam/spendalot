@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h4>{{ category.name }}</h4>
+<h4>{{ category.name }} - <% message %></h4>
 
 <div ng-controller="CategoryCtrl" slug="{{ category.slug }}">
   <div class="row">

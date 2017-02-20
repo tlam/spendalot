@@ -8,17 +8,18 @@ Object.size = function(obj) {
 
 angular.module('spendalot-app').controller('CategoryCtrl', function($scope, $http, $attrs) {
   $http.get('/categories/' + $attrs.slug + '.json').success(function(data) {
-    // Create and populate the data table.
-    var monthlyDataTable = new google.visualization.DataTable();
-    var yearlyDataTable = new google.visualization.DataTable();
     var category = data.category;
-    var name = category.name;
-    var monthlyData = data.monthly.Amount;
-    var yearlyData = data.yearly.Amount;
-
     $scope.monthlyMean = category.monthly_mean;
     $scope.sum = category.sum;
     $scope.yearlyMean = category.yearly_mean;
+
+    $scope.drawChart = function() {
+    // Create and populate the data table.
+    var monthlyDataTable = new google.visualization.DataTable();
+    var yearlyDataTable = new google.visualization.DataTable();
+    var name = category.name;
+    var monthlyData = data.monthly.Amount;
+    var yearlyData = data.yearly.Amount;
 
     monthlyDataTable.addColumn('string', name);
     monthlyDataTable.addColumn('number', name); 
@@ -58,5 +59,7 @@ angular.module('spendalot-app').controller('CategoryCtrl', function($scope, $htt
         hAxis: {title: 'Year'},
         vAxis: {title: 'Amount'}}
     );
+    }
+    google.charts.setOnLoadCallback($scope.drawChart);
   });
 });
