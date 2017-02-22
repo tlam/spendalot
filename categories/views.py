@@ -63,8 +63,7 @@ def categories_json(request):
         if category.name in categories.groups:
             data[category.name] = '{:.2f}'.format(categories.get_group(category.name).sum()['Amount'])
 
-    json_data = json.dumps(data)
-    return HttpResponse(json_data, content_type='application/javascript')
+    return JsonResponse(data)
 
 
 def prediction(request):
