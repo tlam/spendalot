@@ -1,38 +1,18 @@
-Vue.component('pie-chart', {
-  template: '<div id="pie"></div>',
-  mounted: function() {
-    this.$http.get('/categories/categories.json').then(response => {
-      var data = response.data;
-      var pieData = [];
-      for (var category in data) {
-        pieData.push([category, Math.ceil(data[category])]);
-      }
+<template>
+<div></div>
+</template>
 
-      function drawChart() {
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Category');
-        data.addColumn('number', 'Total');
-        data.addRows(pieData);
- 
-        var options = {
-          'title':'Category Expenses',
-          'width':400,
-          'height':300
-        };
- 
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('pie'));
-        chart.draw(data, options);
-      }
-      google.charts.setOnLoadCallback(drawChart);
-    }, response => {
+<script>
+Object.size = function(obj) {
+    var size = 0, key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+};
 
-    });
-  }
-});
-
-Vue.component('category-bar-charts', {
-  template: '<div></div>',
+export default {
+  name: 'category-bar-charts',
   mounted: function() {
     this.$http.get('/categories/clothing.json').then(response => {
       var data = response.data;
@@ -47,7 +27,7 @@ Vue.component('category-bar-charts', {
         var yearlyData = data.yearly.Amount;
 
         monthlyDataTable.addColumn('string', name);
-        monthlyDataTable.addColumn('number', name); 
+        monthlyDataTable.addColumn('number', name);
         monthlyDataTable.addRows(Object.size(monthlyData));
 
         var j = 0;
@@ -67,7 +47,7 @@ Vue.component('category-bar-charts', {
         );
 
         yearlyDataTable.addColumn('string', name);
-        yearlyDataTable.addColumn('number', name); 
+        yearlyDataTable.addColumn('number', name);
         yearlyDataTable.addRows(Object.size(yearlyData));
 
         var j = 0;
@@ -90,4 +70,5 @@ Vue.component('category-bar-charts', {
 
     });
   }
-});
+}
+</script>
