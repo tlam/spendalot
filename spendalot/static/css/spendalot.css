@@ -32,14 +32,13 @@ div#expenses {
   width: 75%;
 }
 
-div#category-stats {
 /*
+div#category-list {
   position: absolute;
-  left: 900px;
-  top: 100px;
-  */
+  left: 840px;
+  top: 150px;
 }
-
+*/
 div.yaxis {
   float: left;
   font-style: italic;

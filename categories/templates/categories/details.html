@@ -1,48 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h4>{{ category.name }} - <% message %></h4>
+<h4>{{ category.name }}</h4>
 
-<div ng-controller="CategoryCtrl" slug="{{ category.slug }}">
-  <div class="row">
-    <div class="col-md-8">
-      <category-bar-charts>
-      </category-bar-charts>
-      <div id="vmonthly-category"></div><div id="vannual-category"></div>
-    </div>
-
-    <div class="col-md-8">
-      <div id="monthly-category"></div>
-      <!--div class="chart">
-        <canvas id="monthly-chart" width="750" height="350"></canvas>
-        <div class="xaxis">Month</div>
-      </div-->
-
-      <div id="yearly-category"></div>
-      <!--div class="chart">
-        <canvas id="yearly-chart" width="600" height="350"></canvas>
-        <div class="xaxis">Year</div>
-      </div-->
-    </div>
-
-
-    <div id="category-stats" class="col-md-2">
-      <div>
-        <b>Monthly mean:</b> {[{monthlyMean}]}
-      </div>
-      <div>
-        <b>Yearly mean:</b> {[{yearlyMean}]}
-      </div>
-      <div>
-        <b>Sum:</b> {[{sum}]}
-      </div>
-
-      <div class="categories list-group">
-      {% for c in categories %}
-        <a href="{% url 'categories:details' c.slug %}" class="list-group-item {% if c.name == category.name %}active{% endif %}">{{ c.name }}</a>
-      {% endfor %}
-      </div>
-    </div>
-  </div>
+<div>
+  <category-bar-charts category="{{ category.slug }}">
+  </category-bar-charts>
 </div>
 {% endblock %}

@@ -4,6 +4,7 @@
 import Vue from 'vue'
 import VueResource from 'vue-resource'
 import PieChart from './components/PieChart.vue'
+import CategoryList from './components/CategoryList.vue'
 import CategoryBarCharts from './components/CategoryBarCharts.vue'
 
 /*
@@ -18,9 +19,10 @@ Vue.use(VueResource);
 new Vue({
   components: { 
     PieChart,
+    CategoryList,
     CategoryBarCharts
   },
-  delimiters: ['<%', '%>'],
+  //delimiters: ['<%', '%>'],
   el: '#vue-app',
   data: {
     message: 'Hello Vue!',

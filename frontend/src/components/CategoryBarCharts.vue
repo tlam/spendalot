@@ -1,5 +1,24 @@
 <template>
-<div></div>
+<div class="row">
+  <div class="col-md-8">
+    <div id="vmonthly-category"></div>
+    <div id="vannual-category"></div>
+  </div>
+
+  <div id="category-stats" class="col-md-2">
+    <div>
+      <b>Monthly mean:</b> {{ monthlyMean }}
+    </div>
+    <div>
+      <b>Annual mean:</b> {{ annualMean }}
+    </div>
+    <div>
+      <b>Sum:</b> {{ sum }}
+    </div>
+
+    <category-list :selectedCategory="category"></category-list>
+  </div>
+</div>
 </template>
 
 <script>
@@ -11,12 +30,28 @@ Object.size = function(obj) {
     return size;
 };
 
+var componentData = {
+  annualMean: 0,
+  monthlyMean: 0,
+  sum: 0
+};
+
 export default {
   name: 'category-bar-charts',
+  components: {
+    'category-list': require('./CategoryList.vue')
+  },
+  data: function() {
+    return componentData;
+  },
+  props: ['category'],
   mounted: function() {
-    this.$http.get('/categories/clothing.json').then(response => {
+    this.$http.get('/categories/' + this.category + '.json').then(response => {
       var data = response.data;
       var category = data.category;
+      componentData.annualMean = category.yearly_mean;
+      componentData.monthlyMean = category.monthly_mean;
+      componentData.sum = category.sum;
 
       function drawChart() {
         // Create and populate the data table.

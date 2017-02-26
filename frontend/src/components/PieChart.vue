@@ -6,7 +6,7 @@
 export default {
   name: 'pie-chart',
   mounted: function() {
-    this.$http.get('/categories/categories.json').then(response => {
+    this.$http.get('/categories/category_stats.json').then(response => {
       var data = response.data;
       var pieData = [];
       for (var category in data) {

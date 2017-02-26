@@ -3,5 +3,6 @@
 data.csv
 dev_settings.py
 expenses.csv
+npm-debug.log
 spendalot/static/data_sources/
 staticfiles

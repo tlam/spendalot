@@ -16,6 +16,22 @@ def index(request):
     return render(request, 'categories/index.html', context)
 
 
+def categories_json(request):
+    categories = Category.objects.all()
+    json_data = {
+        'categories': []
+    }
+    for category in categories:
+        json_data['categories'].append({
+            'id': category.id,
+            'name': category.name,
+            'slug': category.slug,
+            'url': category.get_absolute_url()
+        })
+        print category.get_absolute_url()
+    return JsonResponse(json_data)
+
+
 def details(request, slug):
     category = Category.objects.get(slug=slug)
     context = {
@@ -54,7 +70,7 @@ def details_json(request, slug):
     return JsonResponse(json_data)
 
 
-def categories_json(request):
+def category_stats_json(request):
     df = Expense.data_frame()
     total = df.sum()['Amount']
     categories = df.groupby('Category')
