@@ -112,6 +112,8 @@ DROPBOX_API = {
     'access_token': '',
 }
 
+ALLOWED_HOSTS = ['spendalot.herokuapp.com']
+
 try:
     from dev_settings import *
 except ImportError:
