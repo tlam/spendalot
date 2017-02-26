@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "description": "A Vue.js project",
-  "author": "Thierry <lamthierry@gmail.com>",
+  "author": "Thierry",
   "private": true,
   "scripts": {
     "watchify": "watchify -vd -p browserify-hmr -e src/main.js -o dist/build.js",
@@ -22,9 +22,9 @@
     "vue": "vue/dist/vue.common.js"
   },
   "dependencies": {
+    "axios": "^0.15.3",
     "bootstrap": "^3.3.7",
-    "vue": "^2.0.1",
-    "vue-resource": "^1.2.0"
+    "vue": "^2.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",
