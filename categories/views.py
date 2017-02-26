@@ -28,7 +28,6 @@ def categories_json(request):
             'slug': category.slug,
             'url': category.get_absolute_url()
         })
-        print category.get_absolute_url()
     return JsonResponse(json_data)
 
 
