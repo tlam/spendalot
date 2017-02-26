@@ -1,6 +1,6 @@
 import json
 
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
 from categories.models import Category
@@ -16,6 +16,21 @@ def index(request):
     return render(request, 'categories/index.html', context)
 
 
+def categories_json(request):
+    categories = Category.objects.all()
+    json_data = {
+        'categories': []
+    }
+    for category in categories:
+        json_data['categories'].append({
+            'id': category.id,
+            'name': category.name,
+            'slug': category.slug,
+            'url': category.get_absolute_url()
+        })
+    return JsonResponse(json_data)
+
+
 def details(request, slug):
     category = Category.objects.get(slug=slug)
     context = {
@@ -29,9 +44,9 @@ def details_json(request, slug):
     df = Expense.data_frame()
     categories = df.groupby('Category')
     category = Category.objects.get(slug=slug).name
-    yearly = categories.get_group(category).resample('A', how='sum')
+    yearly = categories.get_group(category).resample('A').sum()
     yearly = yearly.fillna(0)
-    monthly = categories.get_group(category).resample('M', how='sum')
+    monthly = categories.get_group(category).resample('M').sum()
     monthly = monthly.fillna(0)
 
     monthly_mean = monthly.mean()['Amount']
@@ -46,19 +61,15 @@ def details_json(request, slug):
         'yearly_mean': '{0:.2f}'.format(yearly_mean),
     }
 
-    # Concatenate the json data because because panda outputs sorted json
-    json_data = '''
-        {{
-            "category": {},
-            "monthly": {},
-            "yearly": {}
-        }}
-    '''.format(json.dumps(category_data), monthly.to_json(), yearly.to_json())
-
-    return HttpResponse(json_data, content_type='application/javascript')
+    json_data = {
+        'category': category_data,
+        'monthly': monthly.to_dict(),
+        'yearly': yearly.to_dict()
+    }
+    return JsonResponse(json_data)
 
 
-def categories_json(request):
+def category_stats_json(request):
     df = Expense.data_frame()
     total = df.sum()['Amount']
     categories = df.groupby('Category')
@@ -67,8 +78,7 @@ def categories_json(request):
         if category.name in categories.groups:
             data[category.name] = '{:.2f}'.format(categories.get_group(category.name).sum()['Amount'])
 
-    json_data = json.dumps(data)
-    return HttpResponse(json_data, content_type='application/javascript')
+    return JsonResponse(data)
 
 
 def prediction(request):

@@ -13,3 +13,6 @@ class Category(models.Model):
 
     def __unicode__(self):
         return u'{}'.format(self.name)
+
+    def get_absolute_url(self):
+        return u'/categories/{}/'.format(self.slug)
