@@ -1,3 +1,4 @@
+import collections
 import json
 
 from django.http import HttpResponse, JsonResponse
@@ -63,7 +64,7 @@ def details_json(request, slug):
 
     json_data = {
         'category': category_data,
-        'monthly': monthly.to_dict(),
+        'monthly': monthly.to_dict(into=collections.OrderedDict),
         'yearly': yearly.to_dict()
     }
     return JsonResponse(json_data)
