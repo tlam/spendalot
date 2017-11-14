@@ -15,6 +15,7 @@
       <li {% if view_name ==  'categories:index' %}class="active"{% endif %}><a href="{% url 'categories:index' %}">Categories</a></li>
       <li {% if view_name == 'expenses:index' %}class="active"{% endif %}><a href="{% url 'expenses:index' %}">Expenses</a></li>
       <li {% if view_name == 'expenses:trends' %}class="active"{% endif %}><a href="{% url 'expenses:trends' %}">Trends</a></li>
+      <li {% if view_name == 'expenses:cuisines' %}class="active"{% endif %}><a href="{% url 'expenses:cuisines' %}">Cuisines</a></li>
       <li {% if view_name == 'statements:index' %}class="active"{% endif %}><a href="{% url 'statements:index' %}">Statements</a></li>
     {% endwith %}
     </ul>

@@ -25,6 +25,7 @@ class Expense(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateField()
     category = models.ForeignKey('categories.Category', null=True, blank=True)
+    cuisine = models.CharField(max_length=200, blank=True, default='')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -53,13 +54,14 @@ class Expense(models.Model):
         expenses = self.cached()
         with open(DATA_PATH, 'wb') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow(['Description', 'Category', 'Amount', 'Date', 'Payment'])
+            writer.writerow(['Description', 'Category', 'Cuisine', 'Amount', 'Date', 'Payment'])
             for expense in expenses:
                 if not expense.category:
                     continue
                 writer.writerow([
                     expense.description.encode('utf-8'),
                     expense.category.name,
+                    expense.cuisine,
                     expense.amount,
                     expense.date.strftime('%Y-%m-%d'),
                     expense.payment,

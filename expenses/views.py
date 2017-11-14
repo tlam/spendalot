@@ -1,5 +1,6 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from decimal import Decimal
+import collections
 import csv
 import json
 
@@ -102,3 +103,29 @@ def download_csv(request):
         writer.writerow([expense.description.encode('utf-8'), expense.category.name])
 
     return response
+
+
+def cuisines(request):
+    days = 30
+    past = datetime.now() - timedelta(days=days)
+    expenses = Expense.objects.filter(
+        category__name='Restaurant',
+        date__gte=past).order_by('-date')
+
+    last_year = Expense.objects.filter(
+        category__name='Restaurant',
+        date__gte=past - timedelta(days=365),
+        date__lte=datetime.now() - timedelta(days=365)).order_by('-date')
+
+    df = Expense.data_frame()
+    top_cuisines = df.groupby(['Cuisine']).count().sort_values('Category', ascending=False).head(40)
+    context = {
+        'days': days,
+        'expenses': expenses,
+        'last_year': last_year,
+        'top_cuisines': top_cuisines['Category'].to_dict(into=collections.OrderedDict)
+    }
+    return render(
+        request,
+        'expenses/cuisines.html',
+        context)
