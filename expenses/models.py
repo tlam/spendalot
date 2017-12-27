@@ -24,7 +24,7 @@ class Expense(models.Model):
     payment = models.CharField(max_length=5, choices=PAYMENT_CHOICES)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateField()
-    category = models.ForeignKey('categories.Category', null=True, blank=True)
+    category = models.ForeignKey('categories.Category', null=True, blank=True, on_delete=models.CASCADE)
     cuisine = models.CharField(max_length=200, blank=True, default='')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -32,8 +32,8 @@ class Expense(models.Model):
     class Meta:
         ordering = ['-date']
 
-    def __unicode__(self):
-        return u'{}'.format(self.description)
+    def __str__(self):
+        return '{}'.format(self.description)
 
     @property
     def recently_added(self):
@@ -52,7 +52,7 @@ class Expense(models.Model):
     @classmethod
     def write_csv(self):
         expenses = self.cached()
-        with open(DATA_PATH, 'wb') as csvfile:
+        with open(DATA_PATH, 'w') as csvfile:
             writer = csv.writer(csvfile)
             writer.writerow(['Description', 'Category', 'Cuisine', 'Amount', 'Date', 'Payment'])
             for expense in expenses:
@@ -84,10 +84,10 @@ class Expense(models.Model):
         end_date = datetime(year, 12, 31)
         for expense in self.cached().filter(date__gte=start_date, date__lte=end_date):
             month = datetime(expense.date.year, expense.date.month, 1)
-            if not month in data:
+            if month not in data:
                 data[month] = []
             data[month].append(expense)
-        data = sorted(data.iteritems(), reverse=True)
+        data = sorted(data.items(), reverse=True)
         return data
 
     @classmethod

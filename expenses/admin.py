@@ -8,4 +8,5 @@ class ExpenseAdmin(admin.ModelAdmin):
     list_filter = ('category',)
     search_fields = ['cuisine', 'description']
 
+
 admin.site.register(Expense, ExpenseAdmin)

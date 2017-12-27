@@ -18,10 +18,10 @@ class Command(BaseCommand):
         expenses = Expense.objects.filter(
             category__name='Restaurant',
             cuisine='').order_by('-date')
-        print expenses.count()
+        print(expenses.count())
         count = 0
         for expense in expenses:
-            print expense, expense.date
+            print(expense, expense.date)
             response = requests.get(search_url.format(restaurant=expense.description))
             if response.ok:
                 output = response.json()
@@ -36,7 +36,7 @@ class Command(BaseCommand):
                                     if item['position'] == 3:
                                         if item['item']['name'] != 'None':
                                             name_so_far = item['item']['name']
-                                        print name_so_far
+                                        print(name_so_far)
                                         expense.cuisine = name_so_far
                                         expense.save()
                                         break

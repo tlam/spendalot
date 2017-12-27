@@ -21,7 +21,7 @@ class DropboxClient(object):
         latest_file = ''
         latest_date = None
         for entry in self.client.files_list_folder('/ExpenseManager/CSV').entries:
-            print entry.name, entry.client_modified
+            print(entry.name, entry.client_modified)
             if latest_date:
                 if entry.client_modified > latest_date:
                     latest_date = entry.client_modified
@@ -33,7 +33,7 @@ class DropboxClient(object):
 
     def load_expenses(self):
         self.download_file()
-        with open(self.output_path, 'rb') as csvfile:
+        with open(self.output_path, 'r') as csvfile:
             reader = csv.reader(csvfile)
             for row in reader:
                 if len(row) < 7:

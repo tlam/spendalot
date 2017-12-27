@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ('date', models.DateField()),
                 ('created_at', models.DateTimeField(default=datetime.datetime(2014, 9, 7, 18, 0, 27, 580872), auto_now_add=True)),
                 ('updated_at', models.DateTimeField(default=datetime.datetime(2014, 9, 7, 18, 0, 27, 580896), auto_now=True)),
-                ('category', models.ForeignKey(blank=True, to='categories.Category', null=True)),
+                ('category', models.ForeignKey(blank=True, to='categories.Category', null=True, on_delete=models.CASCADE)),
             ],
             options={
                 'ordering': ['-date'],

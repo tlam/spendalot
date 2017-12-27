@@ -15,7 +15,7 @@ from django.conf import global_settings
 import dj_database_url
 
 
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -43,14 +43,15 @@ INSTALLED_APPS = (
     'data_sources',
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-)
+]
 
 ROOT_URLCONF = 'spendalot.urls'
 
@@ -115,6 +116,6 @@ DROPBOX_API = {
 ALLOWED_HOSTS = ['spendalot.herokuapp.com']
 
 try:
-    from dev_settings import *
+    from spendalot.dev_settings import *
 except ImportError:
     pass

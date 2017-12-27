@@ -22,7 +22,7 @@ le.fit(categories)
 target = le.transform(categories)
 unique_categories = df.Category.unique().tolist()
 unique_categories.sort()
-print unique_categories
+print(unique_categories)
 
 # searchsorted to have continuous labels
 clf = MultinomialNB().fit(X_train_tfidf, target)
@@ -34,8 +34,8 @@ X_new_tfidf = tfidf_transformer.transform(X_new_counts)
 
 predicted = clf.predict(X_new_tfidf)
 for search, category in zip(search_terms, predicted):
-    print search, category, unique_categories[category]
-print 'DONE'
+    print(search, category, unique_categories[category])
+print('DONE')
 
 data = df.Name.tolist()
 text_clf = Pipeline([
@@ -46,8 +46,8 @@ text_clf = Pipeline([
 text_clf = text_clf.fit(data, target)
 predicted = text_clf.predict(search_terms)
 for search, category in zip(search_terms, predicted):
-    print search, category, unique_categories[category]
-print np.mean(predicted == target)
+    print(search, category, unique_categories[category])
+print(np.mean(predicted == target))
 
 text_clf = Pipeline([
     ('vect', CountVectorizer()),
@@ -58,4 +58,4 @@ text_clf = Pipeline([
 text_clf = text_clf.fit(data, target)
 predicted = text_clf.predict(search_terms)
 for search, category in zip(search_terms, predicted):
-    print search, category, unique_categories[category]
+    print(search, category, unique_categories[category])

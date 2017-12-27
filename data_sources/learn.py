@@ -8,7 +8,6 @@ try:
     from sklearn.pipeline import Pipeline
     import pandas as pd
 
-
     class Learn(object):
 
         def __init__(self, refresh=False):

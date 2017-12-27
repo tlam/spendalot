@@ -1,7 +1,6 @@
 import collections
-import json
 
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import render
 
 from categories.models import Category
@@ -72,7 +71,6 @@ def details_json(request, slug):
 
 def category_stats_json(request):
     df = Expense.data_frame()
-    total = df.sum()['Amount']
     categories = df.groupby('Category')
     data = {}
     for category in Category.objects.all():
