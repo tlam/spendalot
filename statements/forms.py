@@ -1,5 +1,6 @@
 from datetime import datetime
 from decimal import Decimal
+from io import StringIO
 import csv
 
 from django import forms
@@ -18,11 +19,13 @@ class UploadFileForm(forms.Form):
     file = forms.FileField()
 
     def handle_uploaded_file(self, f):
-        reader = csv.reader(f)
+        csv_buffer = StringIO(f.read().decode())
+        reader = csv.reader(csv_buffer)
         count = 0
         parsing = ''
         for row in reader:
             count += 1
+
             if count == 1:
                 header = row
                 if header[0] == HEADERS['historical'][0]:
