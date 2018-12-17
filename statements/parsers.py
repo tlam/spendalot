@@ -6,26 +6,8 @@ from expenses.models import Expense
 from spendalot import constants
 
 
-class ParserFactory(object):
-    HISTORICAL = 'historical'
-    MASTERCARD = 'mastercard'
-    MASTERCARD_2018 = 'mastercard_2018'
-    HEADERS = {
-        HISTORICAL: ['Description', 'Category', 'Amount', 'Date', 'Payment'],
-        MASTERCARD: ['Transaction Date', 'Posting Date', 'Billing Amount', 'Merchant', 'Merchant City', 'Merchant State', 'Merchant Zip', 'Reference Number', 'Debit/Credit Flag', 'SICMCC Code'],
-        MASTERCARD_2018: ['Merchant Name', 'Card Used For Transaction', 'Date', 'Time', 'Amount']
-    }
-
-    def get(self, parser_type):
-        if parser_type == self.HISTORICAL:
-            return HistoricalParser()
-        elif parser_type == self.MASTERCARD:
-            return MastercardParser()
-        elif parser_type == self.MASTERCARD_2018:
-            return Mastercard2018Parser()
-
-
 class HistoricalParser(object):
+    HEADERS = ['Description', 'Category', 'Amount', 'Date', 'Payment']
 
     def parse(self, row):
         description, category_name, amount, transaction_date, payment = row
@@ -39,7 +21,8 @@ class HistoricalParser(object):
         )
 
 
-class MastercardParser(object):
+class LegacyMastercardParser(object):
+    HEADERS = ['Transaction Date', 'Posting Date', 'Billing Amount', 'Merchant', 'Merchant City', 'Merchant State', 'Merchant Zip', 'Reference Number', 'Debit/Credit Flag', 'SICMCC Code']
 
     def parse(self, row):
         transaction_date, posting_date, billing_amount, merchant, merchant_city, merchant_store, merchant_zip, reference_number, debit_credit_flag, sicmcc_code = row
@@ -60,7 +43,8 @@ class MastercardParser(object):
         )
 
 
-class Mastercard2018Parser(object):
+class MastercardParser(object):
+    HEADERS = ['Merchant Name', 'Card Used For Transaction', 'Date', 'Time', 'Amount']
 
     def parse(self, row):
         merchant_name, card_used, transaction_date, transaction_time, amount = row
@@ -80,3 +64,21 @@ class Mastercard2018Parser(object):
             amount=amount,
             date=transaction_datetime
         )
+
+
+class ParserFactory(object):
+    PARSERS = [
+        HistoricalParser,
+        LegacyMastercardParser,
+        MastercardParser
+    ]
+
+    def __init__(self, csv_header):
+        self.csv_heaer = csv_header
+
+    def create(self):
+        for parser in self.PARSERS:
+            first_header = self.csv_header[0].replace('\ufeff', '').replace('"', '')
+            if first_header == parser.HEADERS[0]:
+                return parser
+        return None

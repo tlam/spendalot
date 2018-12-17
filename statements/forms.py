@@ -13,9 +13,9 @@ class UploadFileForm(forms.Form):
     def handle_uploaded_file(self, f):
         csv_buffer = StringIO(f.read().decode())
         reader = csv.reader(csv_buffer)
-        count = 0
-        parsing = ''
-        parser = None
+        header = next(reader, None)
+        parser = ParserFactory(header).create()
+        """
         for row in reader:
             count += 1
 
@@ -34,5 +34,8 @@ class UploadFileForm(forms.Form):
             if not parsing or not parser:
                 break
 
+            parser.parse(row)
+        """
+        for row in reader:
             parser.parse(row)
         Expense.assign_categories()
