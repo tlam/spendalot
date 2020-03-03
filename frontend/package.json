@@ -22,7 +22,7 @@
     "vue": "vue/dist/vue.common.js"
   },
   "dependencies": {
-    "axios": "^0.15.3",
+    "axios": "^0.19.2",
     "bootstrap": "^4.0.0",
     "vue": "^2.0.1"
   },
