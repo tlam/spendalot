@@ -1,4 +1,4 @@
-django==4.1.13
+django==5.1.15
 psycopg2
 pandas
 dropbox
