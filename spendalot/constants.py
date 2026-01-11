@@ -1,2 +1,2 @@
-CASH = 'CA'
-CREDIT_CARD = 'CC'
+CASH = "CA"
+CREDIT_CARD = "CC"

@@ -11,7 +11,7 @@ class UploadFileForm(forms.Form):
     file = forms.FileField()
 
     def handle_uploaded_file(self, f):
-        csv_buffer = StringIO(f.read().decode())
+        csv_buffer = StringIO(f.read())
         reader = csv.reader(csv_buffer)
         header = next(reader, None)
         parser = ParserFactory(header).create()

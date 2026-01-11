@@ -11,14 +11,17 @@ try:
     class Learn(object):
 
         def __init__(self, refresh=False):
-            file_name = 'expenses.csv'
+            file_name = "expenses.csv"
             if not os.path.isfile(file_name) or refresh:
                 from expenses.models import Expense
-                with open(file_name, 'wb') as csvfile:
+
+                with open(file_name, "w") as csvfile:
                     writer = csv.writer(csvfile)
-                    writer.writerow(['Name', 'Category'])
+                    writer.writerow(["Name", "Category"])
                     for expense in Expense.objects.all():
-                        writer.writerow([expense.description.encode('utf-8'), expense.category.name])
+                        writer.writerow(
+                            [expense.description.encode("utf-8"), expense.category.name]
+                        )
 
             df = pd.read_csv(file_name)
             data = df.Name.tolist()
@@ -29,11 +32,25 @@ try:
             le.fit(categories)
             target = le.transform(categories)
 
-            self.text_clf = Pipeline([
-                ('vect', CountVectorizer()),  # Bag of words
-                ('tfidf', TfidfTransformer()),  # term frequency-inverse document frequency
-                ('clf', SGDClassifier(loss='hinge', penalty='l2', alpha=1e-3, n_iter=5, random_state=42)),  # SVM classifier
-            ])
+            self.text_clf = Pipeline(
+                [
+                    ("vect", CountVectorizer()),  # Bag of words
+                    (
+                        "tfidf",
+                        TfidfTransformer(),
+                    ),  # term frequency-inverse document frequency
+                    (
+                        "clf",
+                        SGDClassifier(
+                            loss="hinge",
+                            penalty="l2",
+                            alpha=1e-3,
+                            max_iter=5,
+                            random_state=42,
+                        ),
+                    ),  # SVM classifier
+                ]
+            )
 
             self.text_clf = self.text_clf.fit(data, target)
 
@@ -44,11 +61,11 @@ try:
             for search, category in zip(search_terms, predicted):
                 return self.unique_categories[category]
 
-            return ''
+            return ""
 
 except ImportError:
-    
+
     class Learn(object):
 
         def predict(self, description):
-            return ''
+            return ""

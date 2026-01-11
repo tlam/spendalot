@@ -1,2 +1,3 @@
+black
 scipy
 scikit-learn

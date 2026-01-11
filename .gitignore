@@ -1,5 +1,6 @@
 *.pyc
 *.swp
+.env
 data.csv
 dev_settings.py
 expenses.csv

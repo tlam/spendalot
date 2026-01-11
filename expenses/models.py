@@ -12,10 +12,10 @@ from categories.models import Category
 from data_sources.learn import Learn
 from spendalot import constants
 
-DATA_PATH = os.path.join(settings.BASE_DIR, 'data_sources', 'data.csv')
+DATA_PATH = os.path.join(settings.BASE_DIR, "data_sources", "data.csv")
 PAYMENT_CHOICES = (
-    (constants.CASH, 'Cash'),
-    (constants.CREDIT_CARD, 'Credit Card'),
+    (constants.CASH, "Cash"),
+    (constants.CREDIT_CARD, "Credit Card"),
 )
 
 
@@ -24,16 +24,18 @@ class Expense(models.Model):
     payment = models.CharField(max_length=5, choices=PAYMENT_CHOICES)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateField()
-    category = models.ForeignKey('categories.Category', null=True, blank=True, on_delete=models.CASCADE)
-    cuisine = models.CharField(max_length=200, blank=True, default='')
+    category = models.ForeignKey(
+        "categories.Category", null=True, blank=True, on_delete=models.CASCADE
+    )
+    cuisine = models.CharField(max_length=200, blank=True, default="")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['-date']
+        ordering = ["-date"]
 
     def __str__(self):
-        return '{}'.format(self.description)
+        return "{}".format(self.description)
 
     @property
     def recently_added(self):
@@ -41,40 +43,44 @@ class Expense(models.Model):
 
     @classmethod
     def cached(self):
-        if 'expenses' in cache:
-            return cache.get('expenses')
+        if "expenses" in cache:
+            return cache.get("expenses")
         else:
-            expenses = Expense.objects.order_by('-date')
+            expenses = Expense.objects.order_by("-date")
             if expenses:
-                cache.set('expenses', expenses)
+                cache.set("expenses", expenses)
             return expenses
 
     @classmethod
     def write_csv(self):
         expenses = self.cached()
-        with open(DATA_PATH, 'w') as csvfile:
+        with open(DATA_PATH, "w") as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow(['Description', 'Category', 'Cuisine', 'Amount', 'Date', 'Payment'])
+            writer.writerow(
+                ["Description", "Category", "Cuisine", "Amount", "Date", "Payment"]
+            )
             for expense in expenses:
                 if not expense.category:
                     continue
-                writer.writerow([
-                    expense.description.encode('utf-8'),
-                    expense.category.name,
-                    expense.cuisine,
-                    expense.amount,
-                    expense.date.strftime('%Y-%m-%d'),
-                    expense.payment,
-                ])
+                writer.writerow(
+                    [
+                        expense.description.encode("utf-8"),
+                        expense.category.name,
+                        expense.cuisine,
+                        expense.amount,
+                        expense.date.strftime("%Y-%m-%d"),
+                        expense.payment,
+                    ]
+                )
 
     @classmethod
     def data_frame(self):
-        if 'data_frame' in cache:
-            return cache.get('data_frame')
+        if "data_frame" in cache:
+            return cache.get("data_frame")
         else:
             Expense.write_csv()
-            df = pd.read_csv(DATA_PATH, parse_dates=['Date'], index_col='Date')
-            cache.set('data_frame', df)
+            df = pd.read_csv(DATA_PATH, parse_dates=["Date"], index_col="Date")
+            cache.set("data_frame", df)
             return df
 
     @classmethod
@@ -106,6 +112,6 @@ class Expense(models.Model):
     @classmethod
     def year_range(self):
         expenses = self.cached()
-        min_date = expenses.aggregate(models.Min('date'))
-        max_date = expenses.aggregate(models.Max('date'))
-        return range(min_date['date__min'].year, max_date['date__max'].year + 1)
+        min_date = expenses.aggregate(models.Min("date"))
+        max_date = expenses.aggregate(models.Max("date"))
+        return range(min_date["date__min"].year, max_date["date__max"].year + 1)

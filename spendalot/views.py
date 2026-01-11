@@ -6,6 +6,6 @@ from expenses.models import Expense
 def home(request):
     total_transactions = Expense.objects.count()
     context = {
-        'total_transactions': total_transactions,
+        "total_transactions": total_transactions,
     }
-    return render(request, 'home.html', context)
+    return render(request, "home.html", context)

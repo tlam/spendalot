@@ -8,11 +8,11 @@ class Category(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['name']
-        verbose_name_plural = 'categories'
+        ordering = ["name"]
+        verbose_name_plural = "categories"
 
     def __str__(self):
-        return '{}'.format(self.name)
+        return "{}".format(self.name)
 
     def get_absolute_url(self):
-        return u'/categories/{}/'.format(self.slug)
+        return "/categories/{}/".format(self.slug)

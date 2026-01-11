@@ -13,14 +13,16 @@ from spendalot import constants
 class DropboxClient(object):
 
     def __init__(self):
-        self.client = dropbox.Dropbox(settings.DROPBOX_API['access_token'])
-        self.data_path = os.path.join(settings.BASE_DIR, 'spendalot', 'static', 'data_sources', 'dropbox')
-        self.output_path = '/tmp/output.csv'
+        self.client = dropbox.Dropbox(settings.DROPBOX_API["access_token"])
+        self.data_path = os.path.join(
+            settings.BASE_DIR, "spendalot", "static", "data_sources", "dropbox"
+        )
+        self.output_path = "/tmp/output.csv"
 
     def download_file(self):
-        latest_file = ''
+        latest_file = ""
         latest_date = None
-        for entry in self.client.files_list_folder('/ExpenseManager/CSV').entries:
+        for entry in self.client.files_list_folder("/ExpenseManager/CSV").entries:
             print(entry.name, entry.client_modified)
             if latest_date:
                 if entry.client_modified > latest_date:
@@ -33,18 +35,20 @@ class DropboxClient(object):
 
     def load_expenses(self):
         self.download_file()
-        with open(self.output_path, 'r') as csvfile:
+        with open(self.output_path, "r") as csvfile:
             reader = csv.reader(csvfile)
             for row in reader:
                 if len(row) < 7:
                     continue
                 try:
-                    transaction_date = datetime.strptime(row[0], '%Y-%m-%d')
+                    transaction_date = datetime.strptime(row[0], "%Y-%m-%d")
                 except ValueError:
                     continue
                 amount = Decimal(row[1]) * Decimal(-1)
                 description = row[7].title()
-                if Expense.objects.filter(description=description, date=transaction_date, amount=amount).count():
+                if Expense.objects.filter(
+                    description=description, date=transaction_date, amount=amount
+                ).count():
                     continue
 
                 Expense.objects.create(
